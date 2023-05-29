@@ -1,0 +1,43 @@
+<html>
+        <head>     
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+        <script src="{{url_for('static',filename='scripts/changeColor.js')}}" defer></script>
+        </head>
+
+        <body style="background-color: #ede9df;">
+                <h1>StockYard</h1>
+
+
+    
+                <br><br>
+                <table border=6 style="margin-left: auto; margin-right: auto; width: 80%;">
+                        <caption style="font-weight: bold;">Stocks</caption>
+                        <thead style="font-weight: bold; text-align: center;">
+                        <td>Name</td>
+                        <td>Ticker</td>
+                        <td>Price</td>
+                        <td>Open</td>
+                        <td>Percent Change</td>
+        
+                        </thead>
+                         <!--Styles for table-->
+                 
+                        {% for t in tickers %}
+                        <tr>
+                        <thead style="font-weight: bold; text-align: center; background-color: white; height: 40;">
+                        <td>{{ t[0] }}</td>
+                        <td>{{ t[1] }}</td>
+                        <td>{{ t[2] }}</td>
+                        <td>{{ t[3] }}</td>
+                        <td class="change">{{ t[4] }}</td>
+
+        
+                        </tr>
+                        {% endfor %}
+                </table>
+
+              
+        
+        
+        </body>
+</html>
