@@ -4,36 +4,40 @@
         <script src="{{url_for('static',filename='scripts/changeColor.js')}}" defer></script>
         </head>
 
-        <body style="background-color: #ede9df;">
+        <body>
                 <h1>StockYard</h1>
-
-
     
                 <br><br>
-                <table border=6 style="margin-left: auto; margin-right: auto; width: 80%;">
+                <table class="styled-table" style="">
                         <caption style="font-weight: bold;">Stocks</caption>
                         <thead style="font-weight: bold; text-align: center;">
-                        <td>Name</td>
+                        <!-- <td>Name</td>
                         <td>Ticker</td>
                         <td>Price</td>
                         <td>Open</td>
-                        <td>Percent Change</td>
+                        <td>Percent Change</td> -->
+                        <tr>
+                                <th>Name</th>
+                                <th>Ticker</th>
+                                <th>Open</th>
+                                <th>Price</th>
+                                
+                                <th>Percent Change</th>
+                        </tr>
         
                         </thead>
-                         <!--Styles for table-->
+                        <tbody>
                  
                         {% for t in tickers %}
-                        <tr>
-                        <thead style="font-weight: bold; text-align: center; background-color: white; height: 40;">
-                        <td>{{ t[0] }}</td>
-                        <td>{{ t[1] }}</td>
-                        <td>{{ t[2] }}</td>
-                        <td>{{ t[3] }}</td>
-                        <td class="change">{{ t[4] }}</td>
-
-        
+                        <tr class="active-row">
+                                <td>{{ t[0] }}</td>
+                                <td>{{ t[1] }}</td>
+                                <td>{{ t[3] }}</td>
+                                <td>{{ t[2] }}</td>
+                                <td class="change">{{ t[4] }}</td>
                         </tr>
                         {% endfor %}
+                        </tbody>
                 </table>
 
               

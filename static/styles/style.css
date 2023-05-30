@@ -28,6 +28,43 @@ input[type=text], input[type=password], input[type=email] {
     background-color: #45a049;
   }
 
+  /* addidtions start */
+
+  table {
+    background-color: #111;
+  }
+
+  /* #background-video {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+  } */
+
+  body {
+    background-image: url('pexels-pixabay-534216.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: scroll;
+    background-position: center;
+    
+  }
+
+  h1 {
+    color: orange;
+  }
+
+  caption {
+    color: orange;
+  }
+
+  /* additions end */
+
   input[type=time]{
     width: 200px;
     padding: 12px 20px;
@@ -37,29 +74,61 @@ input[type=text], input[type=password], input[type=email] {
     border-radius: 4px;
     box-sizing: border-box;
   }
-  body{
+  /* body{
     background-color: #ede9df;;
-  }
+  } */
   
-  table{
-    background: floralwhite;
-  }
-  
-  .plus{
-    height :20px;
+  .styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  img {
-    height: 30px;
+  .styled-table thead tr {
+    background-color: dark;
+    color: white;
+    text-align: left;
   }
 
-  ul {
+  .styled-table th,
+  .styled-table td {
+    padding: 12px 15px;
+  }
+
+  .styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+    background-color: #e4e4e4;
+  }
+
+  .styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+
+  .styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+  }
+
+  .styled-table tbody tr.active-row {
+    font-weight: bold;
+  }
+
+  thead {
+    color: gray;
+  }
+
+
+  /* ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
     background-color: #333;
-  }
+  } */
   
   span {
     float:left;
@@ -85,11 +154,6 @@ input[type=text], input[type=password], input[type=email] {
   li a:hover:not(.active) {
     background-color: #111;
   }
-  
-  thead{
-    background-color: #bbdaff;
-    
-  }
 
   .active {
     background-color: #4f88cc;
@@ -105,7 +169,7 @@ input[type=text], input[type=password], input[type=email] {
 
   .login {
     border-radius: 5px;
-    background-color: #d9e0dc;
     padding: 20px;
+    background-color: #e4e4e4;
   }
 
