@@ -1,5 +1,5 @@
 html {
-  background-color: #333;
+  background-color: #212121;
   font-family: "PT Mono", sans-serif;
 }
 
@@ -55,12 +55,41 @@ input[type=text], input[type=password], input[type=email] {
     
   }
 
-  h1 {
-    color: orange;
-  }
+  
 
   caption {
     color: orange;
+    background-color: #111;
+    padding-top: 10px;
+    font-size: 30px;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7516);
+    justify-content: space-between;
+    overflow: auto;
+    height: min-content;
+
+  }
+
+  h1 {
+    color: orange;
+    font-family: 'lexend Deca', sans-serif;
+    display: inline-block;
+    font-size: 40px;
+    margin-left: 20px;
+  }
+
+  ul {
+    display: inline-block;
+    list-style-type: none;
+    width: 500px;
+    justify-content: space-between;
+    font-size: 30px;
+
   }
 
   /* additions end */
@@ -81,8 +110,8 @@ input[type=text], input[type=password], input[type=email] {
   .styled-table {
     border-collapse: collapse;
     margin: 25px 0;
-    font-size: 0.9em;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 22px;
+    font-family:Arial, Helvetica, sans-serif;
     min-width: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     margin-left: auto;
@@ -100,6 +129,7 @@ input[type=text], input[type=password], input[type=email] {
     padding: 12px 15px;
   }
 
+
   .styled-table tbody tr {
     border-bottom: 1px solid #dddddd;
     background-color: #e4e4e4;
@@ -110,12 +140,9 @@ input[type=text], input[type=password], input[type=email] {
   }
 
   .styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
+    border-bottom: 2px solid black;
   }
 
-  .styled-table tbody tr.active-row {
-    font-weight: bold;
-  }
 
   thead {
     color: gray;
@@ -147,10 +174,7 @@ input[type=text], input[type=password], input[type=email] {
   big {
     font-family: 'Lexend Deca', sans-serif;
   }
-  
-  h1{
-    font-family: 'lexend Deca', sans-serif;
-  }
+
   li a:hover:not(.active) {
     background-color: #111;
   }

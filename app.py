@@ -148,15 +148,17 @@ def home(id):
 
         open = t.info['open']
         close = t.info['currentPrice']
-        percentChange = round(((close - open) / open ) * 100, 2)
+        previousClose = t.info['previousClose']
+        percentChange = round(((close - previousClose) / previousClose ) * 100, 2)
         if percentChange >= 0:
-            percentChangeString = f"+{round(close - open, 2)} ({percentChange}%)"
+            percentChangeString = f"+{round(close - previousClose, 2)} ({percentChange}%)"
         else:
-            percentChangeString = f"{round(close - open, 2)} ({percentChange}%)"
+            percentChangeString = f"{round(close - previousClose, 2)} ({percentChange}%)"
 
         info_list.append("{:.2f}".format(t.info['currentPrice']))
         info_list.append("{:.2f}".format(t.info['open']))
         info_list.append(percentChangeString)
+        info_list.append(previousClose)
 
 
         ticker_list.append(info_list)
@@ -165,7 +167,7 @@ def home(id):
 
 
     if request.method == 'GET':
-        return render_template('/home.html', tickers=ticker_list)
+        return render_template('/home.html', tickers=ticker_list, id=id)
     else:
         try:
             return redirect(url_for('home', id=id))

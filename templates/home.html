@@ -5,24 +5,28 @@
         </head>
 
         <body>
-                <h1>StockYard</h1>
+                <!-- <h1>StockYard</h1> -->
+                <nav>
+                        <h1>StockYard</h1>
+                        <ul id="nav-list">
+                            <li><a class="nav-link" href="/home/{{id}}">Home</a></li>
+                            <li><a class="nav-link" href="#projects">My Portfolio</a></li>
+                            <li><a class="nav-link" href="/login">Log-out</a></li>
+                        </ul>
+                    </nav>
     
                 <br><br>
-                <table class="styled-table" style="">
-                        <caption style="font-weight: bold;">Stocks</caption>
+                <table class="styled-table">
+                        <caption style="font-weight: bold;">Popular Stocks</caption>
                         <thead style="font-weight: bold; text-align: center;">
-                        <!-- <td>Name</td>
-                        <td>Ticker</td>
-                        <td>Price</td>
-                        <td>Open</td>
-                        <td>Percent Change</td> -->
                         <tr>
-                                <th>Name</th>
                                 <th>Ticker</th>
+                                <th>Name</th>
+                                <th>Previous Close</th>
                                 <th>Open</th>
                                 <th>Price</th>
-                                
                                 <th>Percent Change</th>
+
                         </tr>
         
                         </thead>
@@ -30,10 +34,11 @@
                  
                         {% for t in tickers %}
                         <tr class="active-row">
+                                <td style="font-weight: bold;">{{ t[1] }}</td>
                                 <td>{{ t[0] }}</td>
-                                <td>{{ t[1] }}</td>
+                                <td>{{ t[5] }}</td>
                                 <td>{{ t[3] }}</td>
-                                <td>{{ t[2] }}</td>
+                                <td style="font-weight: 600;">{{ t[2] }}</td>
                                 <td class="change">{{ t[4] }}</td>
                         </tr>
                         {% endfor %}
