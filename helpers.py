@@ -1,5 +1,7 @@
 from flask_pymongo import PyMongo
 import bcrypt
+import plotly.graph_objs as go
+import plotly
 
 mongo = PyMongo()
 

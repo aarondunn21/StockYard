@@ -3,6 +3,7 @@ from helpers import *
 from bson.objectid import ObjectId
 import yfinance as yf
 import math
+from ast import literal_eval
 
 import uuid
 
@@ -92,48 +93,48 @@ def home(id):
     "NVDA",   # NVIDIA Corporation
     "JPM",    # JPMorgan Chase & Co.
     "V",      # Visa Inc.
-    "MA",     # Mastercard Incorporated
-    "WMT",    # Walmart Inc.
-    "PG",     # The Procter & Gamble Company
-    "DIS",    # The Walt Disney Company
-    "NFLX",   # Netflix, Inc.
-    "INTC",   # Intel Corporation
-    "AMD",    # Advanced Micro Devices, Inc.
-    "IBM",    # International Business Machines Corporation
-    "GE",     # General Electric Company
-    "UBER",   # Uber Technologies, Inc.
-    "LYFT",   # Lyft, Inc.
-    "CSCO",   # Cisco Systems, Inc.
-    "CMCSA",  # Comcast Corporation
-    "BABA",   # Alibaba Group Holding Limited
-    "PFE",    # Pfizer Inc.
-    "VZ",     # Verizon Communications Inc.
-    "HD",     # The Home Depot, Inc.
-    "PYPL",   # PayPal Holdings, Inc.
-    "ADBE",   # Adobe Inc.
-    "CRM",    # Salesforce.com, Inc.
-    "NKE",    # NIKE, Inc.
-    "ABT",    # Abbott Laboratories
-    "MRNA",   # Moderna, Inc.
-    "COST",   # Costco Wholesale Corporation
-    "XOM",    # Exxon Mobil Corporation
-    "PEP",    # PepsiCo, Inc.
-    "KO",     # The Coca-Cola Company
-    "JNJ",    # Johnson & Johnson
-    "UNH",    # UnitedHealth Group Incorporated
-    "CVS",    # CVS Health Corporation
-    "MCD",    # McDonald's Corporation
-    "BA",     # The Boeing Company
-    "T",      # AT&T Inc.
-    "TSM",    # Taiwan Semiconductor Manufacturing Company Limited
-    "WFC",    # Wells Fargo & Company
-    "C",      # Citigroup Inc.
-    "BAC",    # Bank of America Corporation
-    "AMGN",   # Amgen Inc.
-    "XOM",    # Exxon Mobil Corporation
-    "PEP",    # PepsiCo, Inc.
-    "KO",     # The Coca-Cola Company
-    "JNJ"     # Johnson & Johnson
+    # "MA",     # Mastercard Incorporated
+    # "WMT",    # Walmart Inc.
+    # "PG",     # The Procter & Gamble Company
+    # "DIS",    # The Walt Disney Company
+    # "NFLX",   # Netflix, Inc.
+    # "INTC",   # Intel Corporation
+    # "AMD",    # Advanced Micro Devices, Inc.
+    # "IBM",    # International Business Machines Corporation
+    # "GE",     # General Electric Company
+    # "UBER",   # Uber Technologies, Inc.
+    # "LYFT",   # Lyft, Inc.
+    # "CSCO",   # Cisco Systems, Inc.
+    # "CMCSA",  # Comcast Corporation
+    # "BABA",   # Alibaba Group Holding Limited
+    # "PFE",    # Pfizer Inc.
+    # "VZ",     # Verizon Communications Inc.
+    # "HD",     # The Home Depot, Inc.
+    # "PYPL",   # PayPal Holdings, Inc.
+    # "ADBE",   # Adobe Inc.
+    # "CRM",    # Salesforce.com, Inc.
+    # "NKE",    # NIKE, Inc.
+    # "ABT",    # Abbott Laboratories
+    # "MRNA",   # Moderna, Inc.
+    # "COST",   # Costco Wholesale Corporation
+    # "XOM",    # Exxon Mobil Corporation
+    # "PEP",    # PepsiCo, Inc.
+    # "KO",     # The Coca-Cola Company
+    # "JNJ",    # Johnson & Johnson
+    # "UNH",    # UnitedHealth Group Incorporated
+    # "CVS",    # CVS Health Corporation
+    # "MCD",    # McDonald's Corporation
+    # "BA",     # The Boeing Company
+    # "T",      # AT&T Inc.
+    # "TSM",    # Taiwan Semiconductor Manufacturing Company Limited
+    # "WFC",    # Wells Fargo & Company
+    # "C",      # Citigroup Inc.
+    # "BAC",    # Bank of America Corporation
+    # "AMGN",   # Amgen Inc.
+    # "XOM",    # Exxon Mobil Corporation
+    # "PEP",    # PepsiCo, Inc.
+    # "KO",     # The Coca-Cola Company
+    # "JNJ"     # Johnson & Johnson
     ]
 
     tickers = [yf.Ticker(ticker) for ticker in popular_tickers]
@@ -155,8 +156,8 @@ def home(id):
         else:
             percentChangeString = f"{round(close - previousClose, 2)} ({percentChange}%)"
 
-        info_list.append("{:.2f}".format(t.info['currentPrice']))
-        info_list.append("{:.2f}".format(t.info['open']))
+        info_list.append("{:.2f}".format(close))
+        info_list.append("{:.2f}".format(open))
         info_list.append(percentChangeString)
         info_list.append(previousClose)
 
@@ -173,7 +174,78 @@ def home(id):
             return redirect(url_for('home', id=id))
         except Exception as e:
             return "Error in query operation " + str(e)
+        
 
+@app.route("/stock-page/<id>/<ticker>", methods=['GET', 'POST'])
+def stockPage(id, ticker):
+
+    if request.method == 'POST':
+        ticker = request.form.get('tick').upper()
+        stock = yf.Ticker(ticker)
+
+    if request.method == 'GET':
+        if ticker != "stock-plot.html":
+            ticker = [i for i in literal_eval(ticker)]
+        else:
+            print(ticker)
+            return render_template('/stock-plot.html')
+        stock = yf.Ticker(ticker[1])
+
+    info_list = []
+    info_list.append(stock.info['shortName'])
+    info_list.append(stock.info['symbol'])
     
+
+    open = stock.info['open']
+    close = stock.info['currentPrice']
+    previousClose = stock.info['previousClose']
+    percentChange = round(((close - previousClose) / previousClose ) * 100, 2)
+    if percentChange >= 0:
+        percentChangeString = f"+{round(close - previousClose, 2)} ({percentChange}%)"
+    else:
+        percentChangeString = f"{round(close - previousClose, 2)} ({percentChange}%)"
+
+    info_list.append("{:.2f}".format(close))
+    info_list.append("{:.2f}".format(open))
+    info_list.append(percentChangeString)
+    info_list.append(previousClose)
+    info_list.append("{:,}".format(stock.info['volume']))
+    info_list.append("{:,}".format(stock.info['averageVolume']))
+    info_list.append("$" + "{:,}".format(stock.info['marketCap']))
+    info_list.append(stock.info['dayHigh'])
+    info_list.append(stock.info['dayLow'])
+
+
+    # gather stock data points for display
+
+    data = yf.download(tickers=ticker[1], period='5d', interval='5m', rounding=True)
+    fig = go.Figure()
+
+    fig.add_trace(go.Candlestick())
+    fig.add_trace(go.Candlestick(x=data.index,open = data['Open'], high=data['High'], low=data['Low'], close=data['Close'], name = 'market data'))
+    fig.update_layout(title = f'{stock.info["shortName"]} Share Price', yaxis_title = 'Stock Price (USD)', yaxis=dict(autorange=True, fixedrange=False))
+    fig.update_xaxes(
+    rangeslider_visible=True,
+    rangebreaks=[dict(bounds=['sat', 'mon']), dict(pattern= 'hour', bounds= [16, 9.5] )],
+    rangeselector=dict(
+    buttons=list([
+    dict(count=15, label='15m', step="minute", stepmode="backward", ),
+    dict(count=45, label='45m', step="minute", stepmode="backward"),
+    dict(count=1, label='1h', step="hour", stepmode="backward"),
+    dict(count=1, label='1d', step="day", stepmode="backward"),
+    dict(count=3, label='3d', step="day", stepmode="backward"),
+    dict(step="all")
+    ])
+    )
+    )
+
+    plotly.offline.plot(fig, filename='templates/stock-plot.html', auto_open=False, output_type='file')    
+    # build chart for stock
+
+    return render_template('/stockPage.html', stock=info_list, id=id)
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)

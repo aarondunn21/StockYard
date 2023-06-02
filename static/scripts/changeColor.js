@@ -1,12 +1,12 @@
 
-var times = document.getElementsByClassName("change");
-for (let i = 0 ; i < times.length;++i) 
+var changes = document.getElementsByClassName("change");
+for (let i = 0 ; i < changes.length;++i) 
 {
-    let time = times[i];
-    if(time.innerHTML.charAt(0) == '+'){
-        time.style.color = "green";
+    let change = changes[i];
+    if(change.innerHTML.charAt(0) == '+'){
+        change.style.color = "green";
     }
-    else if(time.innerHTML.charAt(0) == '-'){
-        time.style.color = "red";
+    else if(change.innerHTML.charAt(0) == '-'){
+        change.style.color = "red";
     }
 }

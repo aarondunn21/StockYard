@@ -1,0 +1,60 @@
+<html>
+        <head>     
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+        <script src="{{url_for('static',filename='scripts/changeColor.js')}}" defer></script>
+        </head>
+
+        <body>
+                <!-- <h1>StockYard</h1> -->
+                <nav>
+                        <h1>StockYard</h1>
+                        <ul id="nav-list">
+                            <li><a class="nav-link" href="/home/{{id}}">Home</a></li>
+                            <li><a class="nav-link" href="#projects">My Portfolio</a></li>
+                            <li><a class="nav-link" href="/login">Log-out</a></li>
+                        </ul>
+                </nav>
+                <br><br>
+                
+                <div class="stock-div">
+                    <img src="{{stock[11]}}">
+                    <h2>{{stock[1]}}</h2>
+                    <h3>({{stock[0]}})</h3>
+                    <h3>${{stock[2]}}</h3>
+                    <h3 class="change" style="font-size: 42px;">{{stock[4]}}</h3>
+                    <table class="styled-table" style="height: fit-content;">
+                        <thead style="font-weight: bold; text-align: center;">
+                            <tr>
+                                    <th>Previous Close</th>
+                                    <th>Open</th>
+                                    <th>Price</th>
+                                    
+                                    <th>Volume</th>
+                                    <th>Average Volume</th>
+                                    <th>Market Cap</th>
+                                    <th>Day High</th>
+                                    <th>Day Low</th>
+                                    <th>Percent Change</th>
+    
+                            </tr>
+                        </thead>
+                        <tr class="active-row">
+                            <td>{{ stock[5] }}</td>
+                            <td>{{ stock[3] }}</td>
+                            <td style="font-weight: 600;">{{ stock[2] }}</td>
+                            <td>{{ stock[6] }}</td>
+                            <td>{{ stock[7] }}</td>
+                            <td>{{ stock[8] }}</td>
+                            <td>{{ stock[9] }}</td>
+                            <td>{{ stock[10] }}</td>
+                            <td class="change">{{ stock[4] }}</td>
+                        </tr>
+                    </table>
+                    <iframe src="stock-plot.html" class="stock-plot"></iframe>
+                </div>
+
+
+
+                
+        </body>
+</html>
