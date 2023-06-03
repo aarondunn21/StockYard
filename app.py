@@ -71,9 +71,13 @@ def register():
         name = request.form.get('name')
         pw = request.form.get('password')
 
+        cash = 10000
+        holdings = []
+
+
         hashed_pw = get_hashed_password(pw)
         user_collection.insert_one(
-            {'name': name, 'email': email, 'username': user_name, 'password': hashed_pw, "public_id": str(uuid.uuid4())})
+            {'name': name, 'email': email, 'username': user_name, 'password': hashed_pw, "public_id": str(uuid.uuid4()), "cash": cash, "holdings": holdings})
         # get name from html input form
         # add name into table
         return redirect(url_for('login'))
@@ -212,9 +216,8 @@ def stockPage(id, ticker):
     info_list.append("{:,}".format(stock.info['volume']))
     info_list.append("{:,}".format(stock.info['averageVolume']))
     info_list.append("$" + "{:,}".format(stock.info['marketCap']))
-    info_list.append(stock.info['dayHigh'])
-    info_list.append(stock.info['dayLow'])
-
+    info_list.append("{:.2f}".format(stock.info['dayHigh']))
+    info_list.append("{:.2f}".format(stock.info['dayLow']))
 
     # gather stock data points for display
 
