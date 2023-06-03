@@ -246,13 +246,38 @@ def stockPage(id, ticker):
     return render_template('/stockPage.html', stock=info_list, id=id)
 
 
-@app.route("/buy/<id>/<ticker>", methods=['GET'])
+@app.route("/buy/<id>/<ticker>", methods=['GET', 'POST'])
 def buy(id, ticker):
-    user_collection = mongo.db.Users
-    user = user_collection.find_one({'public_id': id})
-    ticker = [i for i in literal_eval(ticker)]
-    stock = yf.Ticker(ticker[1])
-    cash = user['cash']
+    if request.method == 'GET':
+        user_collection = mongo.db.Users
+        user = user_collection.find_one({'public_id': id})
+        ticker = [i for i in literal_eval(ticker)]
+        stock = yf.Ticker(ticker[1])
+        price = stock.info['currentPrice']
+        cash = user['cash']
+
+        return render_template('/buy.html', id=id, cash=cash, price=price, stock=stock)
+    elif request.method == 'POST':
+        user_collection = mongo.db.Users
+        user = user_collection.find_one({'public_id': id})
+        shares = request.form.get('shares')
+        stock = yf.Ticker(ticker)
+        price = stock.info['currentPrice']
+        # totalPrice = float(shares) * float(price)
+        totalPrice = "{:.2f}".format(float(shares) - float(price))
+        newCash = "{:.2f}".format(float(user['cash']) - float(totalPrice))
+        
+        query = {'public_id' : id}
+        replace = {"$set" : {'cash' : newCash}}
+        user_collection.update_one(query, replace)
+
+        add_purchase = { "$push" : {"holdings" : [ticker, shares, price, totalPrice]}}
+        user_collection.update_one(query, add_purchase)
+
+        # my_array = user['holdings']
+        # print(type(my_array))
+
+        return redirect(url_for('portfolio', id=id))
 
 
 

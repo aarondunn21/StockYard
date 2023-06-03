@@ -22,6 +22,9 @@
                     <h3>({{stock[0]}})</h3>
                     <h3>${{stock[2]}}</h3>
                     <h3 class="change" style="font-size: 42px;">{{stock[4]}}</h3>
+                    <a href="{{ url_for('buy', id=id, ticker=stock ) }}">
+                        <button class="buy-button">Buy</button>
+                    </a>
                     <table class="styled-table" style="height: fit-content;">
                         <thead style="font-weight: bold; text-align: center;">
                             <tr>

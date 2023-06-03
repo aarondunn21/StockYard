@@ -15,7 +15,21 @@
                         </ul>
                 </nav>
                 <br><br>
-                
+                <div class="center">
+   
+    
+                    <form class="buy-form" role="form" method="post" action="{{ url_for('buy', id=id, ticker=stock.ticker)}}">
+                        <h1>{{stock.ticker}}</h1>
+                        <h3>(${{price}})</h3>
+                        <br>
+                        <h3>Cash on Hand: ${{cash}}</h3>
+                        <br>
+                        <span>Number of Shares</span> <input name="shares" type="text" class="form-control" placeholder="enter number of shares" />
+                        <br>
+                        <input type="submit" value="Buy">
+                        <br>
+                    </form>
+                </div>
 
 
 

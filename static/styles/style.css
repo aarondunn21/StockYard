@@ -23,7 +23,7 @@ input[type=text], input[type=password], input[type=email] {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-  }
+  }  
   
   input[type=submit]:hover {
     background-color: #45a049;
@@ -224,6 +224,12 @@ input[type=text], input[type=password], input[type=email] {
     border-radius: 5px;
     padding: 20px;
     background-color: #e4e4e4;
+  }
+  .buy-form {
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #e4e4e4;
+    display: inline-flexbox;
   }
   .search {
     border-radius: 5px;
