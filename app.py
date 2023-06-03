@@ -264,8 +264,8 @@ def buy(id, ticker):
         stock = yf.Ticker(ticker)
         price = stock.info['currentPrice']
         # totalPrice = float(shares) * float(price)
-        totalPrice = "{:.2f}".format(float(shares) - float(price))
-        newCash = "{:.2f}".format(float(user['cash']) - float(totalPrice))
+        totalPrice = float("{:.2f}".format(float(shares) * float(price)))
+        newCash = float("{:.2f}".format(float(user['cash']) - float(totalPrice)))
         
         query = {'public_id' : id}
         replace = {"$set" : {'cash' : newCash}}
@@ -274,8 +274,8 @@ def buy(id, ticker):
         add_purchase = { "$push" : {"holdings" : [ticker, shares, price, totalPrice]}}
         user_collection.update_one(query, add_purchase)
 
-        # my_array = user['holdings']
-        # print(type(my_array))
+        my_array = user['holdings']
+        print(my_array)
 
         return redirect(url_for('portfolio', id=id))
 
