@@ -182,12 +182,12 @@ def stockPage(id, ticker):
     if request.method == 'POST':
         ticker = request.form.get('tick').upper()
         stock = yf.Ticker(ticker)
-
-    if request.method == 'GET':
+        data = yf.download(ticker, period='5d', interval='5m', rounding=True)
+    elif request.method == 'GET':
         if ticker != "stock-plot.html":
             ticker = [i for i in literal_eval(ticker)]
+            data = yf.download(tickers=ticker[1], period='5d', interval='5m', rounding=True)
         else:
-            print(ticker)
             return render_template('/stock-plot.html')
         stock = yf.Ticker(ticker[1])
 
@@ -216,9 +216,7 @@ def stockPage(id, ticker):
     info_list.append(stock.info['dayLow'])
 
 
-    # gather stock data points for display
-
-    data = yf.download(tickers=ticker[1], period='5d', interval='5m', rounding=True)
+    # use stock data points for display candlestick
     fig = go.Figure()
 
     fig.add_trace(go.Candlestick())
@@ -243,6 +241,25 @@ def stockPage(id, ticker):
     # build chart for stock
 
     return render_template('/stockPage.html', stock=info_list, id=id)
+
+
+@app.route("/buy/<id>/<ticker>", methods=['GET'])
+def buy(id, ticker):
+    user_collection = mongo.db.Users
+    user = user_collection.find_one({'public_id': id})
+    ticker = [i for i in literal_eval(ticker)]
+    stock = yf.Ticker(ticker[1])
+    cash = user['cash']
+
+
+
+@app.route("/portfolio/<id>", methods=['GET'])
+def portfolio(id):
+    user_collection = mongo.db.Users
+    user = user_collection.find_one({'public_id': id})
+    cash = user['cash']
+
+    return render_template('/portfolio.html', id=id, cash=cash)
 
 
 
