@@ -2,8 +2,11 @@ from flask_pymongo import PyMongo
 import bcrypt
 import plotly.graph_objs as go
 import plotly
+import datetime as dt
+import locale
 
 mongo = PyMongo()
+locale.setlocale(locale.LC_ALL, '')
 
 
 def get_hashed_password(password):

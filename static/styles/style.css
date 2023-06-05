@@ -107,6 +107,16 @@ input[type=text], input[type=password], input[type=email] {
     font-size: 24px;
     text-align: center;
   }
+  h5 {
+    color: black;
+    font-family: 'lexend Deca', sans-serif;
+    display: inline-block;
+    font-size: 48px;
+    margin: 25px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
 
   ul {
     display: inline-block;
@@ -154,6 +164,41 @@ input[type=text], input[type=password], input[type=email] {
     border-bottom: 2px solid black;
   }
 
+  .styled-table-2 {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 22px;
+    font-family:Arial, Helvetica, sans-serif;
+    /* max-width: 500px; */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    display: inline-table;
+  }
+
+  .styled-table-2 thead tr {
+    background-color: dark;
+    color: white;
+    text-align: left;
+  }
+
+  .styled-table-2 th,
+  .styled-table-2 td {
+    padding: 12px 15px;
+  }
+
+
+  .styled-table-2 tbody tr {
+    border-bottom: 1px solid #dddddd;
+    background-color: #e4e4e4;
+  }
+
+  .styled-table-2 tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+
+  .styled-table-2 tbody tr:last-of-type {
+    border-bottom: 2px solid black;
+  }
+
 
   thead {
     color: gray;
@@ -169,6 +214,7 @@ input[type=text], input[type=password], input[type=email] {
     background-color: white;
     margin-left: 100px;
     margin-right: 100px;
+    justify-content: space-between;
   }
 
   .stock-plot {
@@ -241,4 +287,15 @@ input[type=text], input[type=password], input[type=email] {
     margin-left: auto;
     margin-top: 25px;
   }
+
+  .buy-button {
+    height: 100%;
+  }
+
+  .buys-sells {
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+  }
+
 

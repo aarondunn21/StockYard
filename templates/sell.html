@@ -1,0 +1,38 @@
+<html>
+        <head>     
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+        <script src="{{url_for('static',filename='scripts/changeColor.js')}}" defer></script>
+        </head>
+
+        <body>
+                <!-- <h1>StockYard</h1> -->
+                <nav>
+                        <h1>StockYard</h1>
+                        <ul id="nav-list">
+                            <li><a class="nav-link" href="/home/{{id}}">Home</a></li>
+                            <li><a class="nav-link" href="/portfolio/{{id}}">My Portfolio</a></li>
+                            <li><a class="nav-link" href="/login">Log-out</a></li>
+                        </ul>
+                </nav>
+                <br><br>
+                <div class="center">
+   
+    
+                    <form class="buy-form" role="form" method="post" action="{{ url_for('sell', id=id, ticker=stock.ticker, totalShares=totalShares)}}">
+                        <h1>{{stock.ticker}}</h1>
+                        <h3>(${{price}})</h3>
+                        <br>
+                        <h3>Owned Shares: {{totalShares}}</h3>
+                        <br>
+                        <span>Number of Shares</span> <input name="shares" type="text" class="form-control" placeholder="enter number of shares" />
+                        <br>
+                        <input type="submit" value="Sell">
+                        <br>
+                    </form>
+                </div>
+
+
+
+                
+        </body>
+</html>

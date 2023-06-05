@@ -15,8 +15,97 @@
                         </ul>
                 </nav>
                 <br><br>
+                <div class="stock-div">
+                        <div class="buys-sells">
+                        <h5>Total Holdings: ${{total}}</h5>     
+                        <h5>Cash on Hand: ${{cash}}</h5>
+                        <h5>Net Worth: ${{netWorth}}<h5 class="change">{{percentChangeString}}</h5></h5>
+                        </div>
+                        
+                        <table class="styled-table">
+                                <caption style="font-weight: bold;">Holdings</caption>
+                                <thead style="font-weight: bold; text-align: center;">
+                                <tr>
+                                        <th>Ticker</th>
+                                        <th>Shares</th>
+                                        <th>Average Buy</th>
+                                        <th>Total</th>
+                                </tr>
                 
-                <h3>{{cash}}</h3>
+                                </thead>
+                                <tbody>
+                        
+                                {% for t in holdings %}
+                                <tr class="active-row">
+                                        <td style="font-weight: bold;">{{ t[0] }}</td>
+                                        <td>{{ t[1] }}</td>
+                                        <td>{{ t[6] }}</td>
+                                        <td style="font-weight: 600;">{{ t[7] }}</td>
+                                        <td>
+                                                <a href="{{ url_for('sell', id=id, ticker=t[0], totalShares=t[1] ) }}">
+                                                    <button class="buy-button">Sell</button>
+                                                </a>
+                                        </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                        </table>
+                        <div class="buys-sells">
+                        <table class="styled-table-2">
+                                <caption style="font-weight: bold;">Buys</caption>
+                                <thead style="font-weight: bold; text-align: center;">
+                                <tr>
+                                        <th>Date</th>
+                                        <th>Ticker</th>
+                                        <th>Price</th>
+                                        <th>Shares</th>
+                                        <th>Total Price</th>
+
+                                </tr>
+                
+                                </thead>
+                                <tbody>
+                        
+                                {% for t in buys %}
+                                <tr class="active-row">
+                                        <td>{{ t[4] }}</td>
+                                        <td style="font-weight: bold;">{{ t[0] }}</td>
+                                        <td>{{ t[2] }}</td>
+                                        <td>{{ t[1] }}</td>
+                                        <td style="font-weight: 600;">{{ t[3] }}</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                        </table>
+                        <table class="styled-table-2">
+                                <caption style="font-weight: bold;">Sells</caption>
+                                <thead style="font-weight: bold; text-align: center;">
+                                <tr>
+                                        <th>Date</th>
+                                        <th>Ticker</th>
+                                        <th>Price</th>
+                                        <th>Shares</th>
+                                        <th>Total Price</th>
+
+                                </tr>
+                
+                                </thead>
+                                <tbody>
+                        
+                                {% for t in sales %}
+                                <tr class="active-row">
+                                        <td>{{ t[4] }}</td>
+                                        <td style="font-weight: bold;">{{ t[0] }}</td>
+                                        <td>{{ t[2] }}</td>
+                                        <td>{{ t[1] }}</td>
+                                        <td style="font-weight: 600;">{{ t[3] }}</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                        </table>
+                        </div>             
+                </div>
+                
 
 
 
