@@ -13,6 +13,21 @@ app.config['MONGO_URI'] = 'mongodb+srv://2000ad21:Pass123@stockyard.etxrl3a.mong
 # Database location on Atlas
 mongo.init_app(app)
 
+def average_share(x, id):
+    user_collection = mongo.db.Users
+    user = user_collection.find_one({'public_id': id})
+    holdings = user['holdings']
+    stock_list = []
+    for i in holdings:
+        if x[0] == i[0]:
+            stock_list.append([i[3], i[1]])
+    total = 0
+    shares = 0
+    for i in stock_list:
+        total += i[0]
+        shares += int(i[1])
+    return "{:,.2f}".format(total / shares)
+
 
 @app.route("/")
 def landing(methods=['GET']):
@@ -286,6 +301,7 @@ def buy(id, ticker):
             for j in holdings_list:
                 if ticker == j[0]:
                     j[1] = int(shares) + int(j[1])
+                    j[5] = int(shares) + int(j[5])
                     j[3] = float(totalPrice) + float(j[3])
                     found = 1
             if found != 1:
@@ -392,7 +408,8 @@ def portfolio(id):
 
     for i in ch_list:
         # i.append(float(i[3]) / float(i[5]))
-        i.append("{:,.2f}".format(float(i[3]) / float(i[5])))
+        # i.append("{:,.2f}".format(float(i[3]) / float(i[5])))
+        i.append(average_share(i, id))
         stock = yf.Ticker(i[0])
         stockTotal = float(i[1]) * float(stock.info['currentPrice'])
         holdings_total += stockTotal
@@ -412,7 +429,7 @@ def portfolio(id):
 
     # if totalPurchasePrice != 0:
     percentChange = round(((netWorth - startingCash) / startingCash ) * 100, 2)
-    if percentChange >= 0:
+    if percentChange >= 0.005:
         percentChangeString = f"+{round(netWorth - startingCash, 2)} ({percentChange}%)"
     else:
         percentChangeString = f"{round(netWorth - startingCash, 2)} ({percentChange}%)"
