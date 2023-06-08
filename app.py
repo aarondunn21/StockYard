@@ -411,10 +411,19 @@ def portfolio(id):
         # i.append("{:,.2f}".format(float(i[3]) / float(i[5])))
         i.append(average_share(i, id))
         stock = yf.Ticker(i[0])
-        stockTotal = float(i[1]) * float(stock.info['currentPrice'])
+        curPrice = float(stock.info['currentPrice'])
+        stockTotal = float(i[1]) * curPrice
         holdings_total += stockTotal
         i.append("{:,.2f}".format(float(stockTotal)))
-    
+        i.append("{:,.2f}".format(float(curPrice)))
+
+        percentChangeStock = round(((curPrice - float(i[6])) / float(i[6]) ) * 100, 2)
+        if percentChangeStock >= 0.005:
+            percentChangeStockString = f"+{round(curPrice - float(i[6]), 2)} ({percentChangeStock}%)"
+        else:
+            percentChangeStockString = f"{round(curPrice - float(i[6]), 2)} ({percentChangeStock}%)"
+        i.append(percentChangeStockString)
+
     for i in holdings:
         i[3] = "{:,.2f}".format(float(i[3]))
     
@@ -435,6 +444,8 @@ def portfolio(id):
         percentChangeString = f"{round(netWorth - startingCash, 2)} ({percentChange}%)"
     # else:
     #     percentChangeString = "0.00"
+    
+
     
 
     

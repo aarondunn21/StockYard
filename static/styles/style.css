@@ -169,7 +169,7 @@ input[type=text], input[type=password], input[type=email] {
     margin: 25px 0;
     font-size: 22px;
     font-family:Arial, Helvetica, sans-serif;
-    /* max-width: 500px; */
+    max-width: 45%;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     display: inline-table;
   }

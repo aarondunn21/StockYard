@@ -29,6 +29,8 @@
                                         <th>Ticker</th>
                                         <th>Shares</th>
                                         <th>Average Buy</th>
+                                        <th>Price</th>
+                                        <th>Change</th>
                                         <th>Total</th>
                                 </tr>
                 
@@ -40,6 +42,9 @@
                                         <td style="font-weight: bold;">{{ t[0] }}</td>
                                         <td>{{ t[1] }}</td>
                                         <td>{{ t[6] }}</td>
+                                        <td>{{ t[8] }}</td>
+                                        <td class="change">{{ t[9] }}</td>
+                                        
                                         <td style="font-weight: 600;">{{ t[7] }}</td>
                                         <td>
                                                 <a href="{{ url_for('sell', id=id, ticker=t[0], totalShares=t[1] ) }}">
