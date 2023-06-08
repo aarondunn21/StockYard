@@ -91,12 +91,13 @@ def register():
         startingCash = float(cash)
         holdings = []
         holdingsConsolidated = []
+        sales = []
 
 
         hashed_pw = get_hashed_password(pw)
         user_collection.insert_one(
             {'name': name, 'email': email, 'username': user_name, 'password': hashed_pw, "public_id": str(uuid.uuid4()), "cash": cash,
-              "holdings": holdings, "holdingsConsolidated" : holdingsConsolidated, 'startingCash' : startingCash})
+              "holdings": holdings, "holdingsConsolidated" : holdingsConsolidated, 'startingCash' : startingCash, 'sales':sales})
         # get name from html input form
         # add name into table
         return redirect(url_for('login'))
@@ -116,9 +117,9 @@ def home(id):
     "NVDA",   # NVIDIA Corporation
     "JPM",    # JPMorgan Chase & Co.
     "V",      # Visa Inc.
-    # "MA",     # Mastercard Incorporated
-    # "WMT",    # Walmart Inc.
-    # "PG",     # The Procter & Gamble Company
+    "MA",     # Mastercard Incorporated
+    "WMT",    # Walmart Inc.
+    "PG",     # The Procter & Gamble Company
     # "DIS",    # The Walt Disney Company
     # "NFLX",   # Netflix, Inc.
     # "INTC",   # Intel Corporation
@@ -207,12 +208,18 @@ def stockPage(id, ticker):
         stock = yf.Ticker(ticker)
         data = yf.download(ticker, period='5d', interval='5m', rounding=True)
     elif request.method == 'GET':
+        print(ticker)
         if ticker != "stock-plot.html":
-            ticker = [i for i in literal_eval(ticker)]
-            data = yf.download(tickers=ticker[1], period='5d', interval='5m', rounding=True)
+            if ticker[0] == '[':
+                ticker = [i for i in literal_eval(ticker)]
+                data = yf.download(tickers=ticker[1], period='5d', interval='5m', rounding=True)
+                stock = yf.Ticker(ticker[1])
+            else:
+                stock = yf.Ticker(ticker)
+                data = yf.download(ticker, period='5d', interval='5m', rounding=True)
         else:
             return render_template('/stock-plot.html')
-        stock = yf.Ticker(ticker[1])
+        
 
     info_list = []
     info_list.append(stock.info['shortName'])
@@ -314,7 +321,6 @@ def buy(id, ticker):
         user_collection.update_one(query, add_holdings)
 
         my_array = user['holdings']
-        print(my_array)
 
         return redirect(url_for('portfolio', id=id))
 
@@ -342,25 +348,21 @@ def sell(id, ticker, totalShares):
         timeSold = dt.datetime.now()
         dt_string = timeSold.strftime("%B %d, %Y %I:%M:%S %p")
 
-        print(totalShares)
-        print(shares)
-
         ch_list = []
         conslHoldings = user['holdingsConsolidated']
         for i in conslHoldings:
             ch_list.append(i)
-        print(ch_list)
+
 
         for i in range(len(ch_list)):
             if ch_list[i][0] == ticker:
                 if int(shares) >= int(ch_list[i][1]):
-                    print(i)
                     ch_list.pop(i)
                     break
                 else:
                     ch_list[i][1] = int(ch_list[i][1]) - int(shares)
 
-        print(ch_list)
+
                     
         
         query = {'public_id' : id}
@@ -428,7 +430,6 @@ def portfolio(id):
         i[3] = "{:,.2f}".format(float(i[3]))
     
     netWorth = holdings_total + cash
-    print(ch_list)
 
     ch_list = sorted(ch_list, key=lambda x:locale.atof(x[7]))[::-1]
     
