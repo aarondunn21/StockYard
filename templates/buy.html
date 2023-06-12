@@ -9,7 +9,7 @@
                 <nav>
                         <h1>StockYard</h1>
                         <ul id="nav-list">
-                            <li><a class="nav-link" href="/home/{{id}}">Home</a></li>
+                            <li><a class="nav-link" href="/home/{{id}}/0">Home</a></li>
                             <li><a class="nav-link" href="/portfolio/{{id}}">My Portfolio</a></li>
                             <li><a class="nav-link" href="/login">Log-out</a></li>
                         </ul>
@@ -24,6 +24,9 @@
                         <br>
                         <h3>Cash on Hand: ${{cash}}</h3>
                         <br>
+                        {%if badPrice == 1%}
+                        <p style="color: red;">Not Enough Cash For Transaction</p>
+                        {%endif%}
                         <span>Number of Shares</span> <input name="shares" type="text" class="form-control" placeholder="enter number of shares" />
                         <br>
                         <input type="submit" value="Buy">

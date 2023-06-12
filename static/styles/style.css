@@ -282,7 +282,7 @@ input[type=text], input[type=password], input[type=email] {
     padding: 20px;
     background-color: #e4e4e4;
     max-width: 200px;
-    max-height: 250px;
+    max-height: 300px;
     margin-right: auto;
     margin-left: auto;
     margin-top: 25px;
@@ -296,6 +296,29 @@ input[type=text], input[type=password], input[type=email] {
     justify-content: space-between;
     align-items: center;
     text-align: center;
+  }
+
+  .stock-link:link { 
+    text-decoration: none; 
+    color: coral;
+  }
+
+
+  .stock-link:visited { 
+    text-decoration: none;
+    color: coral;
+   }
+  
+  
+  .stock-link:hover { 
+    text-decoration: none;
+    color: coral;
+   }
+  
+  
+  .stock-link:active { 
+    text-decoration: none; 
+    color: coral;
   }
 
 

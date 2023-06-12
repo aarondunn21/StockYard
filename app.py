@@ -41,7 +41,7 @@ def landing(methods=['GET']):
             if user is None:
                 return redirect(url_for('login'), errorMsg='User not found')
             else:
-                return redirect(url_for('home', id=user['public_id']))
+                return redirect(url_for('home', id=user['public_id'], badSearch=0))
             
 
 # Login page (base path will redirect here if user is not logged in)
@@ -104,8 +104,8 @@ def register():
     else:
         return render_template('/register.html')
     
-@app.route("/home/<id>", methods=['GET'])
-def home(id):
+@app.route("/home/<id>/<badSearch>", methods=['GET'])
+def home(id, badSearch):
     # fang = ['META', 'AMZN', 'NFLX', 'GOOG', 'TSLA', 'BNTX', 'MSFT', 'NVDA']
     popular_tickers = [
     "AAPL",   # Apple Inc.
@@ -190,12 +190,12 @@ def home(id):
 
 
 
-
+    badSearch = int(badSearch)
     if request.method == 'GET':
-        return render_template('/home.html', tickers=ticker_list, id=id)
+        return render_template('/home.html', tickers=ticker_list, id=id, badSearch=badSearch)
     else:
         try:
-            return redirect(url_for('home', id=id))
+            return redirect(url_for('home', id=id, badSearch=badSearch))
         except Exception as e:
             return "Error in query operation " + str(e)
         
@@ -222,12 +222,18 @@ def stockPage(id, ticker):
         
 
     info_list = []
-    info_list.append(stock.info['shortName'])
-    info_list.append(stock.info['symbol'])
+    # info_list.append(stock.info['shortName'])
+    # info_list.append(stock.info['symbol'])
+
+    try:
+        info_list.append(stock.info['shortName'])
+        info_list.append(stock.info['symbol'])
+        open = stock.info['open']
+        close = stock.info['currentPrice']
+    except:
+        return redirect(url_for('home', id=id, badSearch=1))
     
 
-    open = stock.info['open']
-    close = stock.info['currentPrice']
     previousClose = stock.info['previousClose']
     percentChange = round(((close - previousClose) / previousClose ) * 100, 2)
     if percentChange >= 0:
@@ -286,11 +292,16 @@ def buy(id, ticker):
     elif request.method == 'POST':
         user_collection = mongo.db.Users
         user = user_collection.find_one({'public_id': id})
+        userCash = float(user['cash'])
         shares = request.form.get('shares')
         stock = yf.Ticker(ticker)
         price = stock.info['currentPrice']
         totalPrice = float("{:.2f}".format(float(shares) * float(price)))
-        newCash = float("{:.2f}".format(float(user['cash']) - float(totalPrice)))
+
+        if totalPrice > userCash:
+            return render_template('/buy.html', id=id, cash=userCash, price=price, stock=stock, badPrice=1)
+
+        newCash = float("{:.2f}".format(userCash - float(totalPrice)))
         timeBought = dt.datetime.now()
         dt_string = timeBought.strftime("%B %d, %Y %I:%M:%S %p")
         
@@ -338,7 +349,8 @@ def sell(id, ticker, totalShares):
     elif request.method == 'POST':
         user_collection = mongo.db.Users
         user = user_collection.find_one({'public_id': id})
-        shares = request.form.get('shares')
+        shares = int(request.form.get('shares'))
+        totalShares = int(totalShares)
         if shares > totalShares:
             shares = totalShares
         stock = yf.Ticker(ticker)

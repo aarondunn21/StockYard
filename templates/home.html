@@ -9,7 +9,7 @@
                 <nav>
                         <h1>StockYard</h1>
                         <ul id="nav-list">
-                            <li><a class="nav-link" href="/home/{{id}}">Home</a></li>
+                            <li><a class="nav-link" href="/home/{{id}}/0">Home</a></li>
                             <li><a class="nav-link" href="/portfolio/{{id}}">My Portfolio</a></li>
                             <li><a class="nav-link" href="/login">Log-out</a></li>
                         </ul>
@@ -54,6 +54,9 @@
                 </table>
                 <form class="search" role="form" method="post" action="{{ url_for('stockPage', id=id, ticker=tickers )}}">
                         <h4>Search For Ticker</h4>
+                        {%if badSearch == 1%}
+                        <p style="color: red;">Ticker Not Available</p>
+                        {%endif%}
                         <input name="tick" type="text" class="form-control" placeholder="enter ticker" />
                         <input type="submit">
                         
