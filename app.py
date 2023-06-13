@@ -432,10 +432,11 @@ def portfolio(id):
         i.append("{:,.2f}".format(float(curPrice)))
 
         percentChangeStock = round(((curPrice - float(i[6])) / float(i[6]) ) * 100, 2)
+        changeCash = "{:,.2f}".format(curPrice - float(i[6]))
         if percentChangeStock >= 0.005:
-            percentChangeStockString = f"+{round(curPrice - float(i[6]), 2)} ({percentChangeStock}%)"
+            percentChangeStockString = f"+{changeCash} ({percentChangeStock}%)"
         else:
-            percentChangeStockString = f"{round(curPrice - float(i[6]), 2)} ({percentChangeStock}%)"
+            percentChangeStockString = f"{changeCash} ({percentChangeStock}%)"
         i.append(percentChangeStockString)
 
     for i in holdings:
@@ -451,10 +452,12 @@ def portfolio(id):
 
     # if totalPurchasePrice != 0:
     percentChange = round(((netWorth - startingCash) / startingCash ) * 100, 2)
+    changeCash = "{:,.2f}".format(netWorth - startingCash)
     if percentChange >= 0.005:
-        percentChangeString = f"+{round(netWorth - startingCash, 2)} ({percentChange}%)"
+        
+        percentChangeString = f"+{changeCash} ({percentChange}%)"
     else:
-        percentChangeString = f"{round(netWorth - startingCash, 2)} ({percentChange}%)"
+        percentChangeString = f"{changeCash} ({percentChange}%)"
     # else:
     #     percentChangeString = "0.00"
     
