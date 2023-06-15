@@ -2,7 +2,6 @@ from flask import Flask, render_template, redirect, url_for, request, jsonify, m
 from helpers import *
 from bson.objectid import ObjectId
 import yfinance as yf
-import math
 from ast import literal_eval
 
 import uuid
@@ -12,6 +11,7 @@ app = Flask(__name__)
 app.config['MONGO_URI'] = 'mongodb+srv://2000ad21:Pass123@stockyard.etxrl3a.mongodb.net/mydb?retryWrites=true&w=majority'
 # Database location on Atlas
 mongo.init_app(app)
+locale.setlocale(locale.LC_ALL, '')
 
 def average_share(x, id):
     user_collection = mongo.db.Users
@@ -401,18 +401,6 @@ def portfolio(id):
     holdings_list = user['holdingsConsolidated']
     holdings_total = 0
 
-
-
-    # for i in holdings:
-    #     found = 0
-    #     for j in holdings_list:
-    #         if i[0] == j[0]:
-    #             j[1] = int(i[1]) + int(j[1])
-    #             j[3] = float(i[3]) + float(j[3])
-    #             found = 1
-    #     if found != 1:
-    #         holdings_list.append(list(i))
-
     ch_list = []
     if len(holdings_list) > 0:
         for i in holdings_list:
@@ -421,8 +409,6 @@ def portfolio(id):
         
 
     for i in ch_list:
-        # i.append(float(i[3]) / float(i[5]))
-        # i.append("{:,.2f}".format(float(i[3]) / float(i[5])))
         i.append(average_share(i, id))
         stock = yf.Ticker(i[0])
         curPrice = float(stock.info['currentPrice'])
@@ -446,11 +432,6 @@ def portfolio(id):
 
     ch_list = sorted(ch_list, key=lambda x:locale.atof(x[7]))[::-1]
     
-    # totalPurchasePrice = 0
-    # for i in buys:
-    #     totalPurchasePrice += locale.atof(i[3])
-
-    # if totalPurchasePrice != 0:
     percentChange = round(((netWorth - startingCash) / startingCash ) * 100, 2)
     changeCash = "{:,.2f}".format(netWorth - startingCash)
     if percentChange >= 0.005:
@@ -458,23 +439,11 @@ def portfolio(id):
         percentChangeString = f"+{changeCash} ({percentChange}%)"
     else:
         percentChangeString = f"{changeCash} ({percentChange}%)"
-    # else:
-    #     percentChangeString = "0.00"
     
 
-    
-
-    
     netWorth = ("{:,.2f}".format(float(netWorth)))
     holdings_total = ("{:,.2f}".format(float(holdings_total)))
     cash = ("{:,.2f}".format(float(cash)))
-
-    # print(holdings_list)
-
-    # query = {'public_id' : id}
-    # add_holdings = { "$push" : {"holdingsConsolidated" : holdings_list}}
-    # user_collection.update_one(query, add_holdings)
-
     
     return render_template('/portfolio.html', id=id, cash=cash, buys=buys, holdings=ch_list, total=holdings_total, netWorth=netWorth, percentChangeString=percentChangeString, sales=sales)
 
@@ -482,4 +451,4 @@ def portfolio(id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=5000, host='0.0.0.0', debug=True)
