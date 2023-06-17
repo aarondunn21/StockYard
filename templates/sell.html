@@ -15,16 +15,16 @@
                         </ul>
                 </nav>
                 <br><br>
-                <div class="center">
+                <div class="center-sb">
    
     
                     <form class="buy-form" role="form" method="post" action="{{ url_for('sell', id=id, ticker=stock.ticker, totalShares=totalShares)}}">
                         <h1>{{stock.ticker}}</h1>
                         <h3>(${{price}})</h3>
                         <br>
-                        <h3>Owned Shares: {{totalShares}}</h3>
+                        <h6>Owned Shares: {{totalShares}}</h6>
                         <br>
-                        <span>Number of Shares</span> <input name="shares" type="text" class="form-control" placeholder="enter number of shares" />
+                        <span>Number of shares to sell</span> <input name="shares" type="text" class="form-control" placeholder="enter number of shares" />
                         <br>
                         <input type="submit" value="Sell">
                         <br>

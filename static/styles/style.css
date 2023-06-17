@@ -35,18 +35,6 @@ input[type=text], input[type=password], input[type=email] {
     background-color: #111;
   }
 
-  /* #background-video {
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: -1;
-  } */
-
   body {
     background-image: url('pexels-pixabay-534216.jpg');
     background-repeat: no-repeat;
@@ -99,6 +87,7 @@ input[type=text], input[type=password], input[type=email] {
     font-size: 52px;
     margin-left: 40px;
   }
+  
 
   h4 {
     color: black;
@@ -116,6 +105,21 @@ input[type=text], input[type=password], input[type=email] {
     justify-content: center;
     align-items: center;
     text-align: center;
+  }
+
+  h6 {
+    color: rgb(0, 0, 0);
+    font-family: 'lexend Deca', sans-serif;
+    display: inline-block;
+    font-size: 52px;
+  }
+
+  h7 {
+    color: orange;
+    font-family: 'lexend Deca', sans-serif;
+    display: inline-block;
+    font-size: 40px;
+    font-weight: 600;
   }
 
   ul {
@@ -206,12 +210,9 @@ input[type=text], input[type=password], input[type=email] {
 
   .stock-div {
     display: inline-flexbox;
-    /* justify-content: center;
-    align-items: center;
-    text-align: center; */
     min-height: 100vh;
     min-width: 80%;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.99);
     margin-left: 100px;
     margin-right: 100px;
     justify-content: space-between;
@@ -222,15 +223,6 @@ input[type=text], input[type=password], input[type=email] {
     width:100%;
     border: white;
   }
-
-  /* additions end */
-  /* ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-  } */
   
   span {
     float:left;
@@ -264,6 +256,20 @@ input[type=text], input[type=password], input[type=email] {
     align-items: center;
     text-align: center;
     min-height: 100vh;
+  }
+  .center-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 200px;
+  }
+
+  .center-sb {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
   }
 
   .login {
